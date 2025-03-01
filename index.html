@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>JavaScript Root Object</title>
+</head>
+<body>
+    <div id="app">
+        <h1 class="text-3xl p-4">{{ `window(${windowKeys.length})` }}</h1>
+        <hr/>
+        <div class="grid sm:grid-cols-3 grid-cols-2 gap-4 p-4">
+            <div
+                class="p-4 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer break-words"
+                v-for="(wk, index) in windowKeys"
+                :key="index"
+                @click="goTo('Window', wk)"
+            >
+                {{ wk }}
+            </div>
+        </div>
+        <hr/>
+        <h1 class="text-3xl p-4">{{ `document(${domKeys.length})` }}</h1>
+        <hr/>
+        <div class="grid sm:grid-cols-3 grid-cols-2 gap-4 p-4">
+            <div
+                class="p-4 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer break-words"
+                v-for="(dk, index) in domKeys"
+                :key="index"
+                @click="goTo('Document', dk)"
+            >
+                {{ dk }}
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.esm.browser.js';
+
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    windowKeys: Object.keys(window),
+                    domKeys: [],
+                }
+            },
+            methods: {
+                goTo(dir, key) {
+                    window.open(`https://developer.mozilla.org/zh-CN/docs/Web/API/${dir}/${key}`);
+                },
+            },
+        });
+
+        addEventListener('DOMContentLoaded', () => {
+            const arr = [];
+            for (const key in document) {
+                arr.push(key);
+            }
+            if (arr.length) {
+                app.domKeys = arr;
+            }
+        });
+    </script>
+</body>
+
+</html>
