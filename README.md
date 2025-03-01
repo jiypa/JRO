@@ -1,0 +1,2 @@
+# JRO
+JavaScript Root Object
